@@ -10,11 +10,27 @@ export class Philosopher {
   template: `
   <h1>{{title}}</h1>
   <h2>My Philosophers</h2>
+  <div class="container">
   <div class="philosophers" *ngFor="let philosopher of philosophers">
     <h4>{{philosopher.name}}</h4>
     <p *ngFor="let item of philosopher.subject">{{item}}</p>
     </div>
+    </div>
   `,
+  styles: [`
+  .container{
+    display: flex;
+  }
+    .philosophers {
+      font-family: 'Arial';
+      max-width: 300px;
+      min-height: 250px;
+      margin: 10px;
+      border: 3px solid; 
+      background-color: grey;
+    },
+
+    `]
 })
 
 /*ngModel === v-model(vue.js)
@@ -26,7 +42,7 @@ export class Philosopher {
 
 
 export class AppComponent {
-  title = 'Tour of Philosophers';
+  title = 'Philosophers';
   philosophers = PHILOSOPHERS;
 };
 
