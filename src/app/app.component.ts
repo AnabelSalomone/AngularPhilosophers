@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
+
 export class Philosopher {
   id: number;
   name: string;
@@ -23,7 +25,10 @@ export class Philosopher {
     <h2>{{selectedPhilo.name}} details!</h2>
     <div>
       <h4>Branches of study:</h4>
-      <span *ngFor="let item of selectedPhilo.subject">{{item}}, </span>
+      <div class="subject" *ngFor="let item of selectedPhilo.subject">
+      <p class="subject" *ngIf="item !== selectedPhilo.subject[selectedPhilo.subject.length-1]&&selectedPhilo.subject.length-1 !== 0">{{item}}, </p>
+      <p class="subject" *ngIf="item === selectedPhilo.subject[selectedPhilo.subject.length-1]">{{item}}. </p><br/>
+      </div>
       <div>
       <label>Add another branch: </label>
       <input type="text" 
@@ -59,6 +64,9 @@ export class Philosopher {
     font-family: Arial;
   }
 
+  .subject{
+    display: inline-block;
+  }
     `]
 })
 
@@ -70,6 +78,8 @@ export class Philosopher {
  *(click) === onClick (vue.js)
  *ngIf    === v-if
         */
+
+
 
 
 export class AppComponent {
@@ -86,6 +96,7 @@ export class AppComponent {
     this.selectedPhilo.subject.push(this.newBranch);
   }
 };
+
 
 const PHILOSOPHERS: Philosopher[] = [{
   id: 1,
