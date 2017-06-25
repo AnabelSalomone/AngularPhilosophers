@@ -9,13 +9,24 @@ export class Philosopher {
   selector: 'my-app',
   template: `
   <h1>{{title}}</h1>
-  <h2>My Philosophers</h2>
   <div class="container">
-  <div class="philosophers" *ngFor="let philosopher of philosophers">
+  <div class="philosophers" *ngFor="let philosopher of philosophers" (click)="onSelect(philosopher)">
     <h4>{{philosopher.name}}</h4>
-    <p *ngFor="let item of philosopher.subject">{{item}}</p>
     </div>
     </div>
+
+<!--Detail section-->
+<div *ngIf="selectedPhilo">
+    <h2>{{selectedPhilo.name}} details!</h2>
+    <div><label>id: </label>{{selectedPhilo.id}}</div>
+    <div>
+      <label>name: </label>
+      <input [(ngModel)]="selectedPhilo.name" placeholder="name">
+      <h4>Branches of study:</h4>
+      <span *ngFor="let item of selectedPhilo.subject">{{item}}, </span>
+    </div>
+    </div>
+
   `,
   styles: [`
   .container{
@@ -23,8 +34,9 @@ export class Philosopher {
   }
     .philosophers {
       font-family: 'Arial';
+      min-width: 100px;
       max-width: 300px;
-      min-height: 250px;
+      min-height: 50px;
       margin: 10px;
       border: 3px solid; 
       background-color: grey;
@@ -38,12 +50,19 @@ export class Philosopher {
         It indicates that the <li> element and its children constitute 
         a master template.
         It is also === v-for="let item of items" (Vue.js)
+ *(click) === onClick (vue.js)
+ *ngIf    === v-if
         */
 
 
 export class AppComponent {
-  title = 'Philosophers';
+  title: 'Philosophers';
+  selectedPhilo: Philosopher; // != Vue.js, where you initialize a variable with "" if it's a string or 0 if a number, etc. Here, we specify the class.
   philosophers = PHILOSOPHERS;
+
+  onSelect(philosopher: Philosopher): void {
+    this.selectedPhilo = philosopher;
+  }
 };
 
 const PHILOSOPHERS: Philosopher[] = [{
