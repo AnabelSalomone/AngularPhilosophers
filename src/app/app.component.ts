@@ -10,29 +10,37 @@ export class Philosopher {
   template: `
   <h1>{{title}}</h1>
   <div class="container">
-  <div class="philosophers" *ngFor="let philosopher of philosophers" (click)="onSelect(philosopher)">
+  <div class="philosophers" 
+  *ngFor="let philosopher of philosophers" 
+  (click)="onSelect(philosopher)" 
+  [class.selected]="philosopher === selectedPhilo">
     <h4>{{philosopher.name}}</h4>
     </div>
     </div>
 
 <!--Detail section-->
-<div *ngIf="selectedPhilo">
+<div class="detail" *ngIf="selectedPhilo">
     <h2>{{selectedPhilo.name}} details!</h2>
-    <div><label>id: </label>{{selectedPhilo.id}}</div>
     <div>
-      <label>name: </label>
-      <input [(ngModel)]="selectedPhilo.name" placeholder="name">
       <h4>Branches of study:</h4>
       <span *ngFor="let item of selectedPhilo.subject">{{item}}, </span>
+      <div>
+      <label>Add another branch: </label>
+      <input type="text" 
+      [(ngModel)]="newBranch" 
+      placeholder= "Add a new branch"/>
+      <button type="button" (click)="addBranch()">Add!</button>
     </div>
-    </div>
+   </div>
+</div>
 
   `,
   styles: [`
   .container{
     display: flex;
   }
-    .philosophers {
+
+  .philosophers {
       font-family: 'Arial';
       min-width: 100px;
       max-width: 300px;
@@ -41,6 +49,15 @@ export class Philosopher {
       border: 3px solid; 
       background-color: grey;
     },
+
+  .selected {
+    background-color: white !important;
+    color: white !important;
+  }
+
+  .detail{
+    font-family: Arial;
+  }
 
     `]
 })
@@ -59,9 +76,14 @@ export class AppComponent {
   title: 'Philosophers';
   selectedPhilo: Philosopher; // != Vue.js, where you initialize a variable with "" if it's a string or 0 if a number, etc. Here, we specify the class.
   philosophers = PHILOSOPHERS;
+  newBranch: string;
 
   onSelect(philosopher: Philosopher): void {
     this.selectedPhilo = philosopher;
+  }
+
+  addBranch(): void {
+    this.selectedPhilo.subject.push(this.newBranch);
   }
 };
 
