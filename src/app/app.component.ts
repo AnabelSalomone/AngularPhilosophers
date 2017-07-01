@@ -12,11 +12,13 @@ export class Philosopher {
   template: `
   <h1>{{title}}</h1>
   <div class="container">
-  <div class="philosophers" 
+  <div class="philosophers"
   *ngFor="let philosopher of philosophers" 
   (click)="onSelect(philosopher)" 
-  [class.selected]="philosopher === selectedPhilo">
+   [class.selec]="philosopher === selectedPhilo">
+  
     <h4>{{philosopher.name}}</h4>
+ 
     </div>
     </div>
 
@@ -46,18 +48,20 @@ export class Philosopher {
   }
 
   .philosophers {
-      font-family: 'Arial';
+     font-family: 'Arial';
       min-width: 100px;
       max-width: 300px;
       min-height: 50px;
       margin: 10px;
-      border: 3px solid; 
-      background-color: grey;
-    },
+      border: 3px solid black; 
+      background-color: grey !important;
+      border: 3px solid;
+      color:black
+    }
 
-  .selected {
-    background-color: white !important;
-    color: white !important;
+  .selec{
+      background-color: lightgrey;
+      color: white;
   }
 
   .detail{
@@ -90,10 +94,13 @@ export class AppComponent {
 
   onSelect(philosopher: Philosopher): void {
     this.selectedPhilo = philosopher;
+    console.log(philosopher === this.selectedPhilo);
   }
 
   addBranch(): void {
     this.selectedPhilo.subject.push(this.newBranch);
+    this.newBranch = '';
+    console.log(this.selectedPhilo);
   }
 };
 
